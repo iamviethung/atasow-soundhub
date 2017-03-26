@@ -1,0 +1,14 @@
+﻿<Page
+    x:Class="MAudioTestApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MAudioTestApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Unloaded="Page_Unloaded">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock x:Name="tIP" Margin="100,50,100,0" TextWrapping="Wrap" Text="Server IP address: " VerticalAlignment="Top" FontSize="20"/>
+        <TextBlock x:Name="tRate" Margin="100,79,100,0" TextWrapping="Wrap" Text="Frame Rate: " VerticalAlignment="Top" FontSize="20"/>
+    </Grid>
+</Page>

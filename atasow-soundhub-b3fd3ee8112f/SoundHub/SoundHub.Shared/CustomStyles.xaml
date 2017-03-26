@@ -1,0 +1,87 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SoundHub">
+
+    <SolidColorBrush x:Key="DarkerMainBrush" Color="#04314E"/>
+    <SolidColorBrush x:Key="DarkMainBrush" Color="#10476B"/>
+    <SolidColorBrush x:Key="NormalMainBrush" Color="#1F5F89"/>
+    <SolidColorBrush x:Key="LightMainBrush" Color="#3C7296"/>
+    <SolidColorBrush x:Key="LighterMainBrush" Color="#6796B5"/>
+
+    <SolidColorBrush x:Key="DarkerAltBrush" Color="#01253D"/>
+    <SolidColorBrush x:Key="DarkAltBrush" Color="#023B60"/>
+    <SolidColorBrush x:Key="NormalAltBrush" Color="#034D7D"/>
+    <SolidColorBrush x:Key="LightAltBrush" Color="#05609A"/>
+    <SolidColorBrush x:Key="LighterAltBrush" Color="#167ABB"/>
+
+    <SolidColorBrush x:Key="DarkerGrayMainBrush" Color="#234A6A"/>
+    <SolidColorBrush x:Key="DarkGrayMainBrush" Color="#436988"/>
+    <SolidColorBrush x:Key="NormalGrayMainBrush" Color="#6C8BA4"/>
+    <SolidColorBrush x:Key="LightGrayMainBrush" Color="#A5BACD"/>
+    <SolidColorBrush x:Key="LighterGrayMainBrush" Color="#DBE5ED"/>
+
+    <SolidColorBrush x:Key="DarkerGrayBrush" Color="#565656"/>
+    <SolidColorBrush x:Key="DarkGrayBrush" Color="#6A6A6A"/>
+    <SolidColorBrush x:Key="NormalGrayBrush" Color="#7E7E7E"/>
+    <SolidColorBrush x:Key="LightGrayBrush" Color="#939393"/>
+    <SolidColorBrush x:Key="LighterGrayBrush" Color="#B0B0B0"/>
+
+    <SolidColorBrush x:Key="NearBlackGrayBrush" Color="#FF252525"/>
+    <SolidColorBrush x:Key="BlackBrush" Color="#FF1B1B1B"/>
+    
+    <Style TargetType="TextBlock" x:Key="FolderNameTextStyle">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="15, 10, 0, 10"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="FolderNameTextStylePhone">
+        <Setter Property="FontSize" Value="26"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="15, 10, 0, 10"/>
+    </Style>
+    
+    <Style TargetType="PathIcon" x:Key="ModernUIIconSource">
+        <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <CompositeTransform ScaleX="0.7" ScaleY="0.7"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Width" Value="76"/>
+        <Setter Property="Height" Value="76"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    <Style TargetType="PathIcon" x:Key="ModernUIIconSourcePhone">
+        <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <CompositeTransform ScaleX="0.7" ScaleY="0.7"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Width" Value="76"/>
+        <Setter Property="Height" Value="76"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="BigAttributeTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <Style x:Key="SmallAttributeTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{StaticResource NormalGrayBrush}"/>
+    </Style>
+
+    <local:StateToStringConverter x:Key="StateStringConverter"/>
+    <local:StateToColorConverter x:Key="StateColorConverter"/>
+    <local:LowerCaseConverter x:Key="LowerCaseConverter"/>
+    <local:FloatToDataRateConverter x:Key="DataRateConverter"/>
+    <local:ObjectToVisibilityConverter x:Key="VisibilityConverter"/>
+    <local:FloatToGainConverter x:Key="GainConverter"/>
+    <local:BoolToBrushConverter x:Key="ChosenFolderConverter"/>
+    <local:AppStateToStringConverter x:Key="AppStateConverter"/>
+
+</ResourceDictionary>

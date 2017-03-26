@@ -1,0 +1,163 @@
+﻿<Page x:Name="page"
+    x:Class="SoundHub.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SoundHub"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Loaded="Page_Loaded" Unloaded="Page_Unloaded"
+    DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" RequestedTheme="Dark">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Background="{StaticResource NormalMainBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="SoundHub" FontSize="40" Margin="0,0,15,35" TextWrapping="Wrap" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right"/>
+            <TextBlock Text="CLIENT" FontSize="20" HorizontalAlignment="Right" Margin="0,0,15,10" VerticalAlignment="Bottom" />
+            <ListView x:Name="l_folders" Grid.Row="1" IsItemClickEnabled="True" ItemClick="l_folders_ItemClick"
+                      Margin="10,0,0,0" SelectionMode="None" ItemsSource="{Binding}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel HorizontalAlignment="Stretch" Background="{Binding Selected, Converter={StaticResource ChosenFolderConverter}}">
+                            <TextBlock Text="{Binding Name}" Style="{StaticResource FolderNameTextStyle}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="Margin" Value="0,0,-8,0"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Column="1" Background="{StaticResource NearBlackGrayBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="t_foldername" Margin="40,0,10,10" TextWrapping="Wrap"
+                       Text="{Binding Name}"  DataContext="{Binding OpeningFolder}"
+                       VerticalAlignment="Bottom" FontSize="48"/>
+            <ListView x:Name="l_profiles" Grid.Row="1" Margin="20,0,0,0" IsItemClickEnabled="True"
+                      ItemClick="l_profiles_ItemClick" SelectionMode="Single" SelectionChanged="l_profiles_SelectionChanged"
+                      ItemsSource="{Binding}" DataContext="{Binding OpeningFolder}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <local:SClientProfile DataContext="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="Margin" Value="0,0,0,0"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <TextBlock x:Name="t_scanadvise" Margin="30,10,20,0" Grid.Row="1" TextWrapping="WrapWholeWords" VerticalAlignment="Top" Foreground="{StaticResource NormalGrayBrush}" FontSize="18">
+                <TextBlock.Text>
+                    There aren't any available servers. To looking for new servers, right-click and press Scan.
+                </TextBlock.Text>
+            </TextBlock>
+        </Grid>
+
+        <Grid Grid.Column="2" Background="{StaticResource BlackBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <local:RecordButton HorizontalAlignment="Center" VerticalAlignment="Center" Disable="RecordButton_Disable" Enable="RecordButton_Enable" Grid.RowSpan="2"/>
+            <TextBlock Margin="0,0,50,20" VerticalAlignment="Bottom" FontSize="16" TextAlignment="Right"
+                       Text="{Binding State, Converter={StaticResource AppStateConverter}}" Foreground="{StaticResource LighterAltBrush}"/>
+        </Grid>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <AppBar x:Name="appbar" Background="{StaticResource DarkerMainBrush}" BorderBrush="{StaticResource DarkerMainBrush}" Closed="appBar_Closed" Opened="appbar_Opened">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                    <StackPanel x:Name="p_scanning" Orientation="Horizontal" Visibility="Collapsed" >
+                        <StackPanel VerticalAlignment="Center" Margin="0,0,0,10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Scanning..." FontSize="16"/>
+                                <TextBlock x:Name="t_progress" Text="0/256" FontSize="16" Grid.Column="1" TextAlignment="Right"/>
+                            </Grid>
+                            <ProgressBar x:Name="p_progress" Width="300" />
+                        </StackPanel>
+                        <AppBarButton x:Name="b_cancel" Label="Cancel" Icon="Cancel" Click="b_cancel_Click" />
+                    </StackPanel>
+                    <StackPanel x:Name="p_beforescan" Orientation="Horizontal">
+                        <StackPanel VerticalAlignment="Center" Margin="0,0,0,10">
+                            <ComboBox x:Name="c_adapter" Width="300"
+                                      ItemsSource="{Binding AdapterProfiles}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Name}" FontSize="16"/>
+                                            <TextBlock Text="{Binding HostName}" FontSize="11" Margin="0,0,0,2"
+                                                       TextAlignment="Right" Grid.Column="1" VerticalAlignment="Bottom"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                                <ComboBox.ItemContainerStyle>
+                                    <Style TargetType="ComboBoxItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    </Style>
+                                </ComboBox.ItemContainerStyle>
+                            </ComboBox>
+                        </StackPanel>
+                        <AppBarButton x:Name="b_scan" Label="Scan" Icon="View" Click="b_scan_Click" />
+                    </StackPanel>
+                    <AppBarButton x:Name="b_manual" Label="Manual" Icon="Rename">
+                        <AppBarButton.Flyout>
+                            <Flyout Opened="Flyout_Opened">
+                                <Flyout.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox x:Name="t_ipinput" Width="150" PlaceholderText="IP address" Margin="0,0,5,0" TextChanged="t_ipinput_TextChanged"/>
+                                        <Button x:Name="b_pasteflyout" Content="Paste" Click="b_pasteflyout_Click"/>
+                                        <Button x:Name="b_connectflyout" Content="Connect" Click="b_connectflyout_Click"/>
+                                    </StackPanel>
+                                </Flyout.Content>
+                            </Flyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <AppBarButton x:Name="b_connect" Label="Connect" Visibility="Collapsed" Click="b_connect_Click" >
+                        <AppBarButton.Icon>
+                            <PathIcon Style="{StaticResource ModernUIIconSource}"
+                                Data="F1 M27.6073,29.8464 L20.4825,22.7216 C19.8641,22.1033 19.8641,21.1008 20.4825,20.4825 C21.1008,19.8641 22.1033,19.8641 22.7216,20.4825 L29.8464,27.6073 C34.1877,24.3526 40.3735,24.6993 44.3217,28.6475 L28.6475,44.3217 C24.6993,40.3735 24.3526,34.1877 27.6073,29.8464 z M47.7483,32.0742 C51.6965,36.0223 52.0433,42.2082 48.7885,46.5494 L55.5175,53.2784 C56.1358,53.8967 56.1358,54.8992 55.5175,55.5175 C54.8992,56.1359 53.8967,56.1359 53.2783,55.5175 L46.5494,48.7886 C42.2081,52.0433 36.0223,51.6965 32.0741,47.7484 L35.4329,44.3896 L32.6339,41.5906 C31.7064,40.6631 31.7064,39.1594 32.6339,38.2319 C33.5614,37.3044 35.0652,37.3044 35.9927,38.2319 L38.7916,41.0308 L41.0308,38.7917 L38.2319,35.9927 C37.3044,35.0652 37.3044,33.5614 38.2319,32.634 C39.1594,31.7065 40.6631,31.7065 41.5906,32.6339 L44.3896,35.4329 L47.7483,32.0742 z"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton x:Name="b_disconnect" Label="Disconnect" Visibility="Collapsed" Click="b_disconnect_Click">
+                        <AppBarButton.Icon>
+                            <PathIcon Style="{StaticResource ModernUIIconSource}"
+                                Data="F1 M25.7639,28.0031 L20.0866,22.3258 C19.4683,21.7075 19.4683,20.705 20.0866,20.0866 C20.705,19.4683 21.7075,19.4683 22.3258,20.0867 L28.0031,25.7639 C32.3443,22.5092 38.5302,22.856 42.4783,26.8042 L26.8041,42.4784 C22.856,38.5302 22.5092,32.3443 25.7639,28.0031 z M49.1958,33.5217 C53.144,37.4699 53.4908,43.6557 50.2361,47.9969 L55.9133,53.6742 C56.5317,54.2925 56.5317,55.295 55.9133,55.9134 C55.295,56.5317 54.2925,56.5317 53.6742,55.9134 L47.9969,50.2361 C43.6557,53.4908 37.4698,53.1441 33.5216,49.1959 L36.8804,45.8371 L34.0814,43.0381 C33.1539,42.1107 33.1539,40.6069 34.0814,39.6794 C35.0089,38.7519 36.5127,38.7519 37.4402,39.6794 L40.2392,42.4784 L42.4783,40.2392 L39.6794,37.4402 C38.7519,36.5127 38.7519,35.009 39.6794,34.0815 C40.6069,33.154 42.1106,33.154 43.0381,34.0815 L45.8371,36.8804 L49.1958,33.5217 z"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </StackPanel>
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>
+</Page>

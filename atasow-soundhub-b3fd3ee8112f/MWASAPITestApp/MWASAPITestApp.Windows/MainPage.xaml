@@ -1,0 +1,15 @@
+﻿<Page
+    x:Class="MWASAPITestApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MWASAPITestApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Loaded="Page_Loaded">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Slider x:Name="sFrequency" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="500" Height="50" ValueChanged="sFrequency_ValueChanged" LargeChange="250" Maximum="4000" Minimum="250" TickFrequency="250" TickPlacement="Inline" Value="440" SmallChange="50"/>
+        <TextBlock x:Name="lUpdatePeriod" HorizontalAlignment="Center" Margin="0,105,1,0" TextWrapping="Wrap" Text="Update period: " VerticalAlignment="Top" FontSize="20" Width="300"/>
+
+    </Grid>
+</Page>

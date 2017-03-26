@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{35ed3845-5686-447b-a45e-d831ff9e77b1}</ItemsProjectGuid>
+    <ItemsRootNamespace>MWASAPI</ItemsRootNamespace>
+    <ItemsProjectName>MWASAPI.Shared</ItemsProjectName>
+    <CodeSharingProject>248F659F-DAC5-46E8-AC09-60EC9FC95053</CodeSharingProject>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MAudioCaptureClient.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MAudioClient.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MAudioClientException.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MAudioClientProperties.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MAudioRenderClient.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MAudioSessionTypes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MClientState.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MWaveFormat.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MAudioCaptureClient.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MAudioClient.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MAudioClientException.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MAudioRenderClient.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+</Project>

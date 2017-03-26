@@ -1,0 +1,104 @@
+﻿<Page
+    x:Class="SoundHub.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SoundHub"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{StaticResource BlackBrush}" Loaded="Page_Loaded"
+    DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Pivot x:Name="p_root" Title="SOUNDHUB CLIENT" Background="{StaticResource BlackBrush}" SelectionChanged="p_root_SelectionChanged">
+            <PivotItem x:Name="p_folders" Header="folders">
+                <ListView x:Name="l_folders" Grid.Row="1" IsItemClickEnabled="True" ItemClick="l_folders_ItemClick"
+                      SelectionMode="None" ItemsSource="{Binding}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel HorizontalAlignment="Stretch">
+                                <TextBlock Text="{Binding Name}" Style="{StaticResource FolderNameTextStylePhone}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Margin" Value="0,0,0,0"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </PivotItem>
+            <PivotItem x:Name="p_profiles" Header="{Binding Name, Converter={StaticResource LowerCaseConverter}}" 
+                       DataContext="{Binding OpeningFolder}">
+                <Grid>
+                    <ListView x:Name="l_profiles" IsItemClickEnabled="True"
+                      ItemClick="l_profiles_ItemClick" ItemsSource="{Binding}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <local:SClientProfile DataContext="{Binding}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Margin" Value="0,0,0,0"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                    <TextBlock x:Name="t_scanadvise" Margin="0,0,0,0" Grid.Row="1" TextWrapping="WrapWholeWords" VerticalAlignment="Top" Foreground="{StaticResource NormalGrayBrush}" FontSize="18">
+                        <TextBlock.Text>
+                            There aren't any available servers. To looking for new servers, press Scan at the bottom app bar.
+                        </TextBlock.Text>
+                    </TextBlock>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="record">
+                <local:RecordButton x:Name="b_record" HorizontalAlignment="Center" VerticalAlignment="Center" Disable="RecordButton_Disable" Enable="RecordButton_Enable" Locked="RecordButton_Locked" Unlocked="RecordButton_Unlocked"/>
+            </PivotItem>
+        </Pivot>
+        <Grid x:Name="g_scan" Grid.Row="1" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Margin="10,5,10,0" Orientation="Horizontal">
+                <TextBlock Text="Scanning..." />
+                <TextBlock x:Name="t_lastip" Text="192.0.0.0" Margin="10,0,0,0"/>
+            </StackPanel>
+            <TextBlock x:Name="t_progress" Text="0/0" Margin="10,5,10,0" TextAlignment="Right" />
+            <ProgressBar x:Name="p_progress" Grid.Row="1" Margin="10,5" />
+        </Grid>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar x:Name="appbar" Background="{StaticResource BlackBrush}">
+            <AppBarButton x:Name="b_scan" Icon="View" Label="Scan" Click="b_scan_Click"/>
+            <AppBarButton x:Name="b_cancel" Icon="Cancel" Label="Cancel" Visibility="Collapsed" Click="b_cancel_Click" />
+            <AppBarButton x:Name="b_manual" Label="Manual" Icon="Rename">
+                <AppBarButton.Flyout>
+                    <Flyout Opened="Flyout_Opened">
+                        <Flyout.Content>
+                            <StackPanel Margin="10,50,10,10">
+                                <TextBlock Text="Connect manually" FontSize="20" Margin="0,0,0,5"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="t_ipinput" PlaceholderText="Server IP address" Margin="0,0,5,0" TextChanged="t_ipinput_TextChanged" VerticalAlignment="Center"/>
+                                    <Button x:Name="b_connectflyout" Content="Connect" Click="b_connectflyout_Click" HorizontalAlignment="Right" Grid.Column="1"/>
+                                </Grid>
+                            </StackPanel>
+                        </Flyout.Content>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarButton x:Name="b_options" Icon="Setting" Label="Options" Click="b_options_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>
